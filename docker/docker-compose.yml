@@ -1,17 +1,110 @@
 version: "3.9"
 
 services:
-  web:
+  # -----------------------------
+  # a. FRONTEND (Client-side)
+  # -----------------------------
+  frontend:
     build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: ai-music-recommender-web
+      context: ./src/frontend
+      dockerfile: Dockerfile.frontend
+    image: ai-music-recommender-frontend:latest
+    container_name: ai-music-frontend
+    ports:
+      - "3000:3000"  # React dev server or static build
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./src/frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # -----------------------------
+  # b. BACKEND (Server-side)
+  # -----------------------------
+  backend:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile.backend
+    image: ai-music-recommender-backend:latest
+    container_name: ai-music-backend
     ports:
       - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - FLASK_DEBUG=false
+      - DATABASE_URL=postgresql://user:pass@postgres:5432/music_recommender
+      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - REDIS_URL=redis://redis:6379/0
     volumes:
       - ./src/backend:/app/backend:ro
-      - ./src/frontend:/app/frontend:ro
-    environment:
-      # Add env vars here if needed
-      - FLASK_ENV=production
+    depends_on:
+      - postgres
+      - redis
+      - qdrant
     restart: unless-stopped
+
+  # -----------------------------
+  # DATABASE (PostgreSQL)
+  # -----------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: ai-music-postgres
+    environment:
+      POSTGRES_DB: music_recommender
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  # -----------------------------
+  # REDIS (Caching / Sessions)
+  # -----------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: ai-music-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  # -----------------------------
+  # VECTOR DB (Recommendations)
+  # -----------------------------
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: ai-music-qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+
+  # -----------------------------
+  # c. WEB SERVER (NGINX Reverse Proxy)
+  # -----------------------------
+  nginx:
+    image: nginx:alpine
+    container_name: ai-music-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro  # Optional SSL certs
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  qdrant_data:
