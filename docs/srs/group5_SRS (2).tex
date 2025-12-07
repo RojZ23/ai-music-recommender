@@ -1,0 +1,317 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{hyperref}
+
+\begin{document}
+
+%---------------- COVER PAGE ----------------
+\begin{titlepage}
+\centering
+{\LARGE Software Requirements Specification (SRS)\\[0.5cm]
+AI Music Recommender System\\[0.5cm]
+\textbf{Snapshots 1–4}\\[1cm]}
+Version 4.0\\[0.5cm]
+Project Group 5\\[0.5cm]
+David Nazaryan, Eric Castellon, Gustavo Trejo, Rojina Zalzar\\[1cm]
+\today
+\end{titlepage}
+
+%---------------- TABLE OF CONTENTS ----------------
+\tableofcontents
+\newpage
+
+%---------------- VERSION DESCRIPTION ----------------
+\section*{Version Description}
+\addcontentsline{toc}{section}{Version Description}
+\begin{longtable}{p{2cm}p{9cm}p{3cm}}
+\textbf{Version} & \textbf{Description} & \textbf{Date}\\ \hline
+1.0 & Initial SRS for Snapshot 1 of the AI Music Recommender System. Core functionality: authentication, basic playback, interaction logging, and baseline recommendations. & \today\\
+2.0 & SRS updated for Snapshot 2. Adds mood-based recommendation feature and corresponding requirements. & \today\\
+3.0 & SRS updated for Snapshot 3. Adds social and collaborative recommendation features such as following users and friends’ picks. & \today\\
+4.0 & Final SRS for Snapshot 4. Adds Quick Mix feature, refinement requirements, and explicit future work. & \today\\
+\end{longtable}
+\newpage
+
+%====================================================
+% SNAPSHOT 1 – CORE SYSTEM
+%====================================================
+\section{Snapshot 1 – Core System}
+
+\subsection{Introduction}
+
+\subsubsection{Purpose}
+The purpose of this Software Requirements Specification (SRS) is to define the functional and non-functional requirements for Snapshot 1 of the AI Music Recommender System, which suggests songs and playlists based on users’ listening history, preferences, and interactions.[file:1]
+
+\subsubsection{Scope}
+Snapshot 1 delivers a minimal viable product as a web-based or mobile application that allows users to register and authenticate, browse a catalog, play songs, record likes and skips, and receive simple personalized recommendations derived from interaction history stored in the project database.[file:1]
+
+\subsubsection{Intended Audience}
+The intended audience for this SRS includes the course instructor and teaching assistants evaluating the project, Project Group 5 members implementing the software, and future developers or maintainers who need to understand the required behavior of the system for Snapshot 1.[file:1]
+
+\subsubsection{Overview of the Software}
+The AI Music Recommender System in Snapshot 1 focuses on core flows: authentication, music playback, interaction logging, and baseline recommendation generation using past user behavior.[file:1]
+
+\subsection{Overall Description}
+
+\subsubsection{User Needs}
+Users need:
+\begin{itemize}
+  \item A simple way to create an account and sign in securely.
+  \item A music player to browse and play songs from a catalog.
+  \item Personalized recommendations aligned with previous listening behavior.
+  \item A means to express preferences (likes and skips) that influence future recommendations.
+\end{itemize}[file:1]
+
+\subsubsection{Product Perspective}
+The system operates as a standalone application with a client, backend server, and database layer, where the music catalog for Snapshot 1 is predefined and stored in the project database.[file:1]
+
+\subsection{External Interface Requirements}
+
+\subsubsection{User Interface}
+Snapshot 1 shall provide:
+\begin{itemize}
+  \item A login and registration screen for user authentication.
+  \item A home screen that displays a list of recommended songs and basic playlists.
+  \item A search screen to search by song title, artist, or genre.
+  \item A now-playing screen with play, pause, next, and previous controls, plus like and skip buttons.
+\end{itemize}[file:1]
+
+\subsubsection{Software Interfaces}
+The client communicates with:
+\begin{itemize}
+  \item A backend API for registration, login, recommendation retrieval, catalog browsing, and interaction logging.
+  \item A database storing user accounts, songs, artists, and interaction logs.
+\end{itemize}[file:1]
+
+\subsubsection{Hardware Interfaces}
+The system targets standard desktop or mobile devices with network connectivity and does not require special hardware.[file:1]
+
+\subsection{Functional Requirements}
+
+\subsubsection{Authentication and User Management}
+\begin{itemize}
+  \item FR-1: The system shall allow a new user to create an account using email and password.
+  \item FR-2: The system shall allow an existing user to log in with registered credentials.
+  \item FR-3: The system shall validate credentials and reject invalid login attempts.
+\end{itemize}[file:1]
+
+\subsubsection{Music Catalog and Playback}
+\begin{itemize}
+  \item FR-4: The system shall display a list of available songs with title, artist, and basic metadata.
+  \item FR-5: The system shall allow a user to start playback of a selected song.
+  \item FR-6: The system shall provide playback controls for play, pause, next, and previous.
+\end{itemize}[file:1]
+
+\subsubsection{Recommendation and Interaction Logging}
+\begin{itemize}
+  \item FR-7: The system shall display a list of recommended songs on the home screen for the logged-in user.
+  \item FR-8: The system shall allow users to like a currently playing song.
+  \item FR-9: The system shall allow users to skip a song and automatically move to the next track.
+  \item FR-10: The system shall log interactions, including plays, likes, and skips, associated with the user.
+  \item FR-11: The system shall use the logged interactions to adjust future recommendations.
+\end{itemize}[file:1]
+
+\subsubsection{Search}
+\begin{itemize}
+  \item FR-12: The system shall allow users to search for songs by title, artist, or genre.
+  \item FR-13: The system shall return a list of matching songs that can be played.
+\end{itemize}[file:1]
+
+\subsection{Non-Functional Requirements}
+
+\subsubsection{Performance}
+\begin{itemize}
+  \item NFR-1: The system should load the home screen and recommended songs within a few seconds under normal network conditions.
+\end{itemize}[file:1]
+
+\subsubsection{Usability}
+\begin{itemize}
+  \item NFR-2: Navigation among login, home, search, and now-playing screens shall be intuitive and consistent.
+\end{itemize}[file:1]
+
+\subsubsection{Security}
+\begin{itemize}
+  \item NFR-3: Passwords shall be stored using secure hashing rather than plain text.
+  \item NFR-4: Only authenticated users shall access personalized recommendations and interaction history.
+\end{itemize}[file:1]
+
+\subsection{Legal and Ethical Considerations}
+
+\subsubsection{Data Storage and Privacy}
+The system stores user account information and listening history solely to provide and improve recommendations, limiting access to authorized components and ensuring passwords are stored in hashed form.[file:1]
+
+\subsubsection{User Consent and Data Protection}
+Users are informed that their interaction data (likes, skips, and plays) is collected and used to personalize recommendations, and that the project avoids sharing personal or identifiable user data with third parties.[file:1]
+
+%====================================================
+% SNAPSHOT 2 – MOOD-BASED RECOMMENDATIONS
+%====================================================
+\section{Snapshot 2 – Mood-Based Recommendations}
+
+\subsection{Introduction}
+
+\subsubsection{Purpose}
+This snapshot extends Snapshot 1 by specifying requirements for mood-based recommendations, allowing users to select a mood and receive playlists tailored to that mood using predefined or learned song features.[web:8]
+
+\subsubsection{Scope}
+Snapshot 2 adds mood selection to the user interface, mood-aware recommendation logic, and storage of user mood choices, while preserving all Snapshot 1 functionality.[web:8]
+
+\subsubsection{Intended Audience}
+The audience includes the course instructor, teaching assistants, and project team members implementing and testing the mood-based feature.[web:8]
+
+\subsection{New and Updated Requirements}
+
+\subsubsection{User Interface Extensions}
+\begin{itemize}
+  \item FR-M1: The system shall provide a mood selector on the home screen (e.g., Happy, Chill, Focus, Energetic).
+  \item FR-M2: The system shall display a ``Mood Playlist'' section showing songs tailored to the selected mood.
+\end{itemize}[web:8]
+
+\subsubsection{Mood-Based Recommendation}
+\begin{itemize}
+  \item FR-M3: The system shall allow a user to change the current mood at any time from the home screen.
+  \item FR-M4: When the user selects a mood, the system shall generate a playlist of songs associated with that mood using stored mood features or tags.
+  \item FR-M5: The system shall use both mood and the user’s interaction history when ordering songs in the mood playlist.
+\end{itemize}[web:8][web:12]
+
+\subsubsection{Interaction and Data Storage}
+\begin{itemize}
+  \item FR-M6: The system shall store the user’s most recent mood selections for future recommendation tuning.
+  \item FR-M7: The system shall log plays, likes, and skips that occur while a mood is active, including the active mood label.
+\end{itemize}[web:8]
+
+\subsubsection{Search and Navigation}
+\begin{itemize}
+  \item FR-M8: The user shall be able to navigate between the regular recommendation list and the mood playlist.
+  \item FR-M9: The user shall still be able to use search independent of mood selection.
+\end{itemize}[web:8]
+
+\subsection{Non-Functional Requirements (Snapshot 2)}
+
+\subsubsection{Performance}
+\begin{itemize}
+  \item NFR-M1: Updating the mood playlist after changing the selected mood should complete within a few seconds under normal conditions.
+\end{itemize}[web:8]
+
+\subsubsection{Usability}
+\begin{itemize}
+  \item NFR-M2: The mood selector shall be clearly visible and easy to understand (e.g., labeled buttons or icons).
+\end{itemize}[web:8]
+
+\subsection{Legal and Ethical Considerations}
+Mood data is treated like other interaction data and is used only to personalize recommendations, following the same privacy principles defined for Snapshot 1 and informing users that mood selections are stored for personalization.[web:8]
+
+%====================================================
+% SNAPSHOT 3 – SOCIAL AND COLLABORATIVE
+%====================================================
+\section{Snapshot 3 – Social and Collaborative Recommendations}
+
+\subsection{Introduction}
+
+\subsubsection{Purpose}
+This snapshot extends Snapshots 1 and 2 by specifying social and collaborative recommendation features, allowing users to follow other users and receive recommendations influenced by community listening patterns.[web:12]
+
+\subsubsection{Scope}
+Snapshot 3 adds follow relationships, friends’ playlists, and collaborative recommendation logic while maintaining all previously implemented features.[web:12]
+
+\subsection{New Functional Requirements}
+
+\subsubsection{Follow System}
+\begin{itemize}
+  \item FR-S1: The system shall allow a logged-in user to follow another user.
+  \item FR-S2: The system shall allow a user to unfollow a previously followed user.
+  \item FR-S3: The system shall display a list of users that the current user follows.
+\end{itemize}[web:12]
+
+\subsubsection{Friends’ Picks and Collaborative Recommendations}
+\begin{itemize}
+  \item FR-S4: The system shall display a ``Friends’ Picks'' or similar section with songs liked by followed users.
+  \item FR-S5: The system shall update the ``Friends’ Picks'' section when followed users like new songs.
+  \item FR-S6: The system shall use collaborative information (e.g., similar users’ likes) to supplement content-based and mood-based recommendations.
+\end{itemize}[web:12]
+
+\subsubsection{Privacy and Control}
+\begin{itemize}
+  \item FR-S7: The system shall only share non-sensitive activity (e.g., liked songs) as part of social features.
+  \item FR-S8: The system shall allow users to view which parts of their activity are visible to followers.
+\end{itemize}[web:12]
+
+\subsection{Non-Functional Requirements (Snapshot 3)}
+
+\subsubsection{Performance}
+\begin{itemize}
+  \item NFR-S1: Generating the ``Friends’ Picks'' list should complete within a few seconds for a typical number of followed users.
+\end{itemize}[web:12]
+
+\subsubsection{Usability}
+\begin{itemize}
+  \item NFR-S2: Follow and unfollow controls shall be clearly labeled and accessible from user profile or recommendation screens.
+\end{itemize}[web:12]
+
+\subsection{Legal and Ethical Considerations}
+Social features introduce additional privacy considerations, and the system shall inform users that their liked tracks may be visible to followers while avoiding exposure of personal identifiers beyond the project requirements.[web:12]
+
+%====================================================
+% SNAPSHOT 4 – FINAL RELEASE AND FUTURE WORK
+%====================================================
+\section{Snapshot 4 – Final Release and Future Work}
+
+\subsection{Introduction}
+
+\subsubsection{Purpose}
+This snapshot finalizes requirements by adding a Quick Mix feature and documenting refinement, quality, and future work for the AI Music Recommender System.[web:11][web:12]
+
+\subsubsection{Scope}
+Snapshot 4 focuses on polishing existing functionality, adding a lightweight new feature, and clarifying requirements that improve usability and performance while retaining all previous features.[web:11]
+
+\subsection{New Functional Requirements}
+
+\subsubsection{Quick Mix Feature}
+\begin{itemize}
+  \item FR-F1: The system shall provide a ``Quick Mix'' button that generates a mixed playlist using the user’s recent history, current mood (if any), and social signals.
+  \item FR-F2: The system shall start playing the first track of the Quick Mix playlist automatically after it is generated.
+\end{itemize}[web:11]
+
+\subsubsection{Refinement and Quality}
+\begin{itemize}
+  \item FR-F3: The system shall allow users to refresh a recommendation section (e.g., mood playlist, friends’ picks) to request a new set of songs.
+  \item FR-F4: The system shall provide basic error messages and feedback when recommendation or network requests fail.
+\end{itemize}[web:11]
+
+\subsection{Non-Functional Requirements (Snapshot 4)}
+
+\subsubsection{Performance and Reliability}
+\begin{itemize}
+  \item NFR-F1: Generating a Quick Mix playlist shall complete within a few seconds under normal usage.
+  \item NFR-F2: The system shall handle typical concurrent usage scenarios without noticeable degradation, within project constraints.
+\end{itemize}[web:11]
+
+\subsubsection{Usability}
+\begin{itemize}
+  \item NFR-F3: Key actions (play, like, skip, mood change, Quick Mix) shall require at most a few taps or clicks from the main screen.
+\end{itemize}[web:11]
+
+\subsection{Future Work}
+Potential future improvements include:
+\begin{itemize}
+  \item Integration of more advanced machine learning models for music recommendation and mood detection.
+  \item Support for richer context signals such as time of day, activity, or device location.
+  \item Deeper social features such as collaborative playlist editing and comments.
+  \item Enhanced explainability for recommendations (e.g., showing why a song was recommended).
+\end{itemize}[web:8][web:11][web:12]
+
+%---------------- GLOSSARY ----------------
+\section*{Glossary}
+\addcontentsline{toc}{section}{Glossary}
+\begin{longtable}{p{3cm}p{9cm}}
+\textbf{Acronym} & \textbf{Meaning}\\ \hline
+UI & User Interface\\
+API & Application Programming Interface\\
+DB & Database\\
+SRS & Software Requirements Specification\\
+SDD & Software Design Document\\
+ML & Machine Learning\\
+\end{longtable}
+
+\end{document}

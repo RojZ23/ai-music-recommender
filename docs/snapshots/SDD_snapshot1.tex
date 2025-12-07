@@ -1,0 +1,120 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{hyperref}
+
+\title{Software Design Document (SDD)\\
+AI Music Recommender System\\
+Snapshot 1 - Core System}
+\author{Project Group 5}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Version Description}
+\begin{longtable}{p{2cm}p{9cm}p{3cm}}
+\textbf{Version} & \textbf{Description} & \textbf{Date}\\ \hline
+1.0 & Initial SDD for Snapshot 1 of the AI Music Recommender System. Describes base architecture, core components, and database design. & \today\\
+\end{longtable}
+
+\section{Introduction}
+\subsection{Purpose}
+This document describes the internal design and architecture for Snapshot 1 of the AI Music Recommender System, mapping the SRS requirements to implementable components.
+
+\subsection{Scope}
+Snapshot 1 includes a client interface, backend services, a simple recommendation component, and a relational database for user, catalog, and interaction data.
+
+\subsection{Intended Audience}
+The audience includes project team members, the course instructor, teaching assistants, and future developers who need to understand the initial design.
+
+\section{System Overview}
+The system is composed of:
+\begin{itemize}
+  \item A client application for user interaction.
+  \item Backend services providing REST APIs for authentication, catalog, recommendations, and interaction logging.
+  \item A recommendation engine using past interactions for basic personalization.
+  \item A database layer storing users, songs, artists, and interactions.
+\end{itemize}
+
+\section{Architecture Design}
+\subsection{Workflow}
+\begin{enumerate}
+  \item The user opens the client and logs in.
+  \item The client sends credentials to the authentication API.
+  \item On success, the client requests recommended songs for the user.
+  \item The backend reads interaction history, runs recommendation logic, and returns a ranked list of tracks.
+  \item The user plays songs and can like or skip them.
+  \item The client logs play, like, and skip events via the interaction API, which stores them in the database.
+\end{enumerate}
+
+\subsection{Main Components}
+\subsubsection{Client Application}
+\begin{itemize}
+  \item Login/registration screens.
+  \item Home screen displaying recommended songs.
+  \item Search screen.
+  \item Now-playing screen with playback and feedback controls.
+\end{itemize}
+
+\subsubsection{Backend Services}
+\begin{itemize}
+  \item Authentication module (register, login).
+  \item Catalog module (list songs, search songs).
+  \item Recommendation module (fetch recommendations).
+  \item Interaction logger (store plays, likes, skips).
+\end{itemize}
+
+\subsubsection{Recommendation Engine}
+\begin{itemize}
+  \item Reads the user’s interaction history.
+  \item Computes simple scores based on likes and skips.
+  \item Produces a ranked list of candidate tracks for the backend.
+\end{itemize}
+
+\section{Database Design}
+\subsection{Schema}
+Entities for Snapshot 1:
+\begin{itemize}
+  \item User(userId, name, email, passwordHash, createdAt).
+  \item Artist(artistId, name).
+  \item Track(trackId, title, artistId, album, genre, duration).
+  \item Interaction(interactionId, userId, trackId, actionType, timestamp).
+  \item Playlist(optional)(playlistId, userId, name).
+\end{itemize}
+
+\subsection{Relationships}
+\begin{itemize}
+  \item One User to many Interactions.
+  \item One Track to many Interactions.
+  \item One Artist to many Tracks.
+  \item One User to zero or many Playlists.
+\end{itemize}
+
+\section{Interface Design}
+\subsection{API Endpoints (Logical)}
+Example logical endpoints:
+\begin{itemize}
+  \item POST /auth/register
+  \item POST /auth/login
+  \item GET /songs/recommended
+  \item GET /songs/search
+  \item POST /interactions
+\end{itemize}
+
+\section{Design Constraints}
+\begin{itemize}
+  \item Design must be simple enough for implementation within the course schedule.
+  \item Components should be modular to support additional features in later snapshots.
+\end{itemize}
+
+\section{Glossary}
+\begin{itemize}
+  \item UI: User Interface.
+  \item API: Application Programming Interface.
+  \item DB: Database.
+  \item SRS: Software Requirements Specification.
+  \item SDD: Software Design Document.
+\end{itemize}
+
+\end{document}

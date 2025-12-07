@@ -1,0 +1,71 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{hyperref}
+
+\title{Software Requirements Specification (SRS)\\
+AI Music Recommender System\\
+Snapshot 2 - Mood-Based Recommendations}
+\author{Project Group 5}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Version Description}
+\begin{longtable}{p{2cm}p{9cm}p{3cm}}
+\textbf{Version} & \textbf{Description} & \textbf{Date}\\ \hline
+2.0 & SRS updated for Snapshot 2. Adds mood-based recommendation feature and corresponding requirements. & \today\\
+\end{longtable}
+
+\section{Introduction}
+\subsection{Purpose}
+This SRS extends Snapshot 1 by specifying requirements for mood-based recommendations, allowing users to select a mood and receive playlists tailored to that mood using predefined or learned song features.[web:16][web:18]
+
+\subsection{Scope}
+Snapshot 2 adds mood selection to the UI, mood-aware recommendation logic, and storage of user mood choices, while preserving all Snapshot 1 functionality.
+
+\subsection{Intended Audience}
+The audience includes the course instructor, teaching assistants, and project team members implementing and testing the mood-based feature.
+
+\section{New and Updated Requirements}
+\subsection{User Interface Extensions}
+\begin{itemize}
+  \item FR-M1: The system shall provide a mood selector on the home screen (e.g., Happy, Chill, Focus, Energetic).
+  \item FR-M2: The system shall display a “Mood Playlist” section showing songs tailored to the selected mood.
+\end{itemize}
+
+\subsection{Mood-Based Recommendation}
+\begin{itemize}
+  \item FR-M3: The system shall allow a user to change the current mood at any time from the home screen.
+  \item FR-M4: When the user selects a mood, the system shall generate a playlist of songs associated with that mood using stored mood features or tags.[web:13][web:18]
+  \item FR-M5: The system shall use both mood and the user’s interaction history when ordering songs in the mood playlist.
+\end{itemize}
+
+\subsection{Interaction and Data Storage}
+\begin{itemize}
+  \item FR-M6: The system shall store the user’s most recent mood selections for future recommendation tuning.
+  \item FR-M7: The system shall log plays, likes, and skips that occur while a mood is active, including the active mood label.
+\end{itemize}
+
+\subsection{Search and Navigation}
+\begin{itemize}
+  \item FR-M8: The user shall be able to navigate between the regular recommendation list and the mood playlist.
+  \item FR-M9: The user shall still be able to use search independent of mood selection.
+\end{itemize}
+
+\section{Non-Functional Requirements (Snapshot 2)}
+\subsection{Performance}
+\begin{itemize}
+  \item NFR-M1: Updating the mood playlist after changing the selected mood should complete within a few seconds under normal conditions.
+\end{itemize}
+
+\subsection{Usability}
+\begin{itemize}
+  \item NFR-M2: The mood selector shall be clearly visible and easy to understand (e.g., labeled buttons or icons).
+\end{itemize}
+
+\section{Legal and Ethical Considerations}
+Mood data is treated like other interaction data and is used only to personalize recommendations, following the same privacy principles defined for Snapshot 1 and informing users that mood selections are stored for personalization.[web:16]
+
+\end{document}

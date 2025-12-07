@@ -1,0 +1,342 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{hyperref}
+
+\begin{document}
+
+%---------------- COVER PAGE ----------------
+\begin{titlepage}
+\centering
+{\LARGE Software Design Document (SDD)\\[0.5cm]
+AI Music Recommender System\\[0.5cm]
+\textbf{Snapshots 1–4}\\[1cm]}
+Version 4.0\\[0.5cm]
+Project Group 5\\[0.5cm]
+David Nazaryan, Eric Castellon, Gustavo Trejo, Rojina Zalzar\\[1cm]
+\today
+\end{titlepage}
+
+%---------------- TABLE OF CONTENTS ----------------
+\tableofcontents
+\newpage
+
+%---------------- VERSION DESCRIPTION ----------------
+\section*{Version Description}
+\addcontentsline{toc}{section}{Version Description}
+\begin{longtable}{p{2cm}p{9cm}p{3cm}}
+\textbf{Version} & \textbf{Description} & \textbf{Date}\\ \hline
+1.0 & Initial SDD for Snapshot 1 of the AI Music Recommender System. Describes base architecture, core components, and database design. & \today\\
+2.0 & SDD updated for Snapshot 2. Extends architecture and database design for mood-based recommendations. & \today\\
+3.0 & SDD updated for Snapshot 3. Adds social graph (follow relationships) and collaborative recommendation logic. & \today\\
+4.0 & Final SDD for Snapshot 4. Adds Quick Mix flow, performance refinements, and design notes for future work. & \today\\
+\end{longtable}
+\newpage
+
+%====================================================
+% SNAPSHOT 1 – CORE DESIGN
+%====================================================
+\section{Snapshot 1 – Core Design}
+
+\subsection{Introduction}
+
+\subsubsection{Purpose of the Document}
+This Software Design Document describes the architecture and internal design of the AI Music Recommender System for Snapshot 1, mapping the SRS requirements to implementable components that generate personalized song recommendations based on user interactions and preferences.[file:2]
+
+\subsubsection{Scope}
+Snapshot 1 includes a client application, backend services, a simple recommendation engine, and a relational database for user, catalog, and interaction data that support authentication, playback, interaction logging, and baseline recommendations.[file:2]
+
+\subsubsection{Intended Audience}
+The audience includes the course instructor and teaching assistants, Project Group 5 members responsible for implementation, and any future developers or maintainers who need to understand how the system is structured.[file:2]
+
+\subsection{System Architecture}
+
+\subsubsection{Workflow of the System}
+\begin{enumerate}
+  \item The user logs into the client application.
+  \item The user plays songs and provides feedback such as likes or skips.
+  \item The client sends interaction events to the backend via REST APIs.
+  \item The backend stores interactions and invokes the recommendation engine.
+  \item The recommendation engine scores candidate songs and returns top recommendations.
+  \item The backend returns the recommended list to the client, which displays it to the user.
+\end{enumerate}[file:2]
+
+\subsubsection{Components}
+
+\paragraph{Client-Side}
+\begin{itemize}
+  \item User interface for login and registration.
+  \item Home screen displaying recommended songs and playlists.
+  \item Search screen for finding songs by title, artist, or genre.
+  \item Now-playing view with playback controls and feedback buttons such as like and skip.
+\end{itemize}[file:2]
+
+\paragraph{Server-Side}
+\begin{itemize}
+  \item Authentication module for user login and session management.
+  \item REST API layer for handling requests from the client.
+  \item Recommendation service that prepares features, invokes algorithms, and formats recommendation results.
+\end{itemize}[file:2]
+
+\paragraph{Data Storage}
+\begin{itemize}
+  \item Database for user accounts, songs, artists, and interaction logs.
+  \item Optional tables for playlists and pre-computed recommendation data.
+\end{itemize}[file:2]
+
+\subsection{Database Design}
+
+\subsubsection{Conceptual Schema}
+A simple conceptual schema for Snapshot 1 includes:
+\begin{itemize}
+  \item User(userId, name, email, passwordHash, createdAt).
+  \item Track(trackId, title, artistId, album, genre, duration).
+  \item Artist(artistId, name).
+  \item Interaction(interactionId, userId, trackId, actionType, timestamp).
+  \item Playlist (optional)(playlistId, userId, name).
+\end{itemize}[file:2]
+
+\subsubsection{Relationships}
+\begin{itemize}
+  \item One User to many Interactions.
+  \item One Track to many Interactions.
+  \item One Artist to many Tracks.
+  \item One User to zero or many Playlists.
+\end{itemize}[file:2]
+
+\subsection{User Interface Design}
+
+\subsubsection{How to Use the System}
+\begin{enumerate}
+  \item Users open the application and either register for a new account or log in with existing credentials.
+  \item After logging in, users are taken to the home screen where they can see recommended songs and start playback.
+  \item Users can like or skip songs and use the search screen to find specific tracks, artists, or genres, and their actions influence future recommendations.
+\end{enumerate}[file:2]
+
+\subsection{API Endpoints (Logical)}
+Example logical endpoints for Snapshot 1:
+\begin{itemize}
+  \item POST /auth/register
+  \item POST /auth/login
+  \item GET /songs/recommended
+  \item GET /songs/search
+  \item POST /interactions
+\end{itemize}[file:2]
+
+%====================================================
+% SNAPSHOT 2 – MOOD-BASED DESIGN UPDATES
+%====================================================
+\section{Snapshot 2 – Mood-Based Design Updates}
+
+\subsection{Introduction}
+
+\subsubsection{Purpose}
+This snapshot updates the Snapshot 1 design to incorporate mood-based recommendations, including new UI elements, backend logic, and database structures that handle mood metadata and mood preferences.[web:8][web:12]
+
+\subsubsection{Scope}
+Snapshot 2 modifies the recommendation workflow to accept a mood parameter, adds storage for mood preferences, and updates the client to support mood selection while reusing the core architecture.[web:8]
+
+\subsection{Architecture Changes}
+
+\subsubsection{Updated Workflow}
+\begin{enumerate}
+  \item The user logs in and views the home screen.
+  \item The user selects a mood (e.g., Happy, Chill, Focus).
+  \item The client calls the recommendation API with the user identifier and selected mood.
+  \item The backend queries song features or tags associated with that mood and the user’s interaction history.
+  \item The recommendation engine ranks candidate songs using a mood-aware scoring function and returns a playlist.
+  \item The user plays songs and provides like or skip feedback, which is stored with the active mood label.
+\end{enumerate}[web:8]
+
+\subsection{New and Extended Components}
+
+\subsubsection{Client Application}
+\begin{itemize}
+  \item Adds a mood selector UI element on the home screen.
+  \item Displays a ``Mood Playlist'' section populated by mood-aware recommendations.
+\end{itemize}[web:8]
+
+\subsubsection{Backend Services}
+\begin{itemize}
+  \item Extends the recommendation API to accept an optional mood parameter.
+  \item Adds a mood preference handler that records the user’s selected mood.
+\end{itemize}[web:8]
+
+\subsubsection{Recommendation Engine}
+\begin{itemize}
+  \item Incorporates mood metadata (e.g., mood labels, energy, valence) into the ranking algorithm.
+  \item Applies filters and boosts for songs whose mood attributes align with the selected mood.
+\end{itemize}[web:8][web:12]
+
+\subsection{Database Design Updates}
+
+\subsubsection{New and Modified Tables}
+\begin{itemize}
+  \item MoodPreference(userId, mood, selectedAt).
+  \item Optional mood-related attributes added to Track, such as moodLabel or energy/valence fields.
+  \item Interaction table extended with an optional mood column to record the active mood at the time of interaction.
+\end{itemize}[web:8]
+
+\subsubsection{Example Relationships}
+\begin{itemize}
+  \item One User to many MoodPreference records.
+  \item One Track may be associated with one or more mood labels via attributes or auxiliary tables.
+\end{itemize}[web:8]
+
+\subsection{Interface Design}
+
+\subsubsection{API Changes}
+\begin{itemize}
+  \item GET /songs/recommended?mood=\{mood\}: returns a mood-aware recommendation list.
+  \item POST /moods/select: stores the user’s selected mood for the current session.
+\end{itemize}[web:8]
+
+\subsection{Design Considerations}
+\begin{itemize}
+  \item Mood-based logic is designed to be modular, allowing additional moods or a more advanced mood detection model in future snapshots.
+  \item Default behavior falls back to Snapshot 1 recommendations when no mood is selected.
+\end{itemize}[web:8][web:11]
+
+%====================================================
+% SNAPSHOT 3 – SOCIAL AND COLLABORATIVE DESIGN
+%====================================================
+\section{Snapshot 3 – Social and Collaborative Design}
+
+\subsection{Introduction}
+
+\subsubsection{Purpose}
+This snapshot extends the design to include social and collaborative recommendations, combining user–user relationships with existing content and mood-based approaches.[web:12]
+
+\subsubsection{Scope}
+Snapshot 3 adds follow and unfollow operations, friends’ recommendations, and collaborative algorithms while reusing existing modules from earlier snapshots.[web:12]
+
+\subsection{Architecture Changes}
+
+\subsubsection{Updated Workflow}
+\begin{enumerate}
+  \item The user follows one or more other users through the client.
+  \item The client sends follow and unfollow requests to the backend social service.
+  \item The social service stores follow relationships in the database.
+  \item When the user opens the ``Friends’ Picks'' section, the client requests collaborative recommendations.
+  \item The backend retrieves followed users and their liked tracks, optionally incorporating similar-user data, and returns a ranked list.
+\end{enumerate}[web:12]
+
+\subsection{New and Extended Components}
+
+\subsubsection{Social Service}
+\begin{itemize}
+  \item Manages follow and unfollow operations.
+  \item Provides APIs to fetch a user’s follow list and followers.
+\end{itemize}[web:12]
+
+\subsubsection{Collaborative Recommendation Module}
+\begin{itemize}
+  \item Aggregates liked songs from followed users.
+  \item Optionally computes similarity scores between users based on interaction patterns.
+  \item Combines collaborative scores with existing content and mood scores in a hybrid ranking model.
+\end{itemize}[web:12]
+
+\subsection{Database Design Updates}
+
+\subsubsection{New Tables}
+\begin{itemize}
+  \item Follow(userId, followsUserId, createdAt).
+  \item Optional UserSimilarity(userId, otherUserId, similarityScore) for precomputed similarity.
+\end{itemize}[web:12]
+
+\subsubsection{Relationships}
+\begin{itemize}
+  \item A User can follow many other Users via Follow records.
+  \item UserSimilarity allows fast lookup of similar users for collaborative filtering.
+\end{itemize}[web:12]
+
+\subsection{Interface Design}
+
+\subsubsection{API Changes}
+\begin{itemize}
+  \item POST /social/follow
+  \item POST /social/unfollow
+  \item GET /social/following
+  \item GET /songs/friends-picks
+\end{itemize}[web:12]
+
+\subsection{Design Considerations}
+\begin{itemize}
+  \item Social features are designed as a separate module to isolate privacy and policy concerns.
+  \item The hybrid approach allows combining content-based, mood-based, and collaborative scores for better recommendations.
+\end{itemize}[web:12]
+
+%====================================================
+% SNAPSHOT 4 – FINAL ARCHITECTURE REFINEMENTS
+%====================================================
+\section{Snapshot 4 – Final Architecture Refinements}
+
+\subsection{Introduction}
+
+\subsubsection{Purpose}
+This snapshot refines the design by adding a Quick Mix feature, performance-related improvements, and architectural notes that support future enhancements.[web:11]
+
+\subsubsection{Scope}
+Snapshot 4 does not introduce a major new subsystem but extends existing modules and clarifies design decisions for maintainability, performance, and future growth.[web:11]
+
+\subsection{Architecture Updates}
+
+\subsubsection{Quick Mix Workflow}
+\begin{enumerate}
+  \item The user triggers Quick Mix from the main screen.
+  \item The client calls a Quick Mix endpoint with the user identifier and context (e.g., current mood, recent interactions).
+  \item The backend collects candidate tracks from content-based, mood-based, and collaborative sources.
+  \item The recommendation engine combines these sources into a hybrid ranked playlist.
+  \item The backend returns the playlist, and the client starts playback.
+\end{enumerate}[web:11][web:12]
+
+\subsection{Caching and Optimization (Optional)}
+\begin{itemize}
+  \item Frequently requested recommendation lists (e.g., top mood playlists) may be cached briefly to reduce load.
+  \item Database indexes may be added on key fields (userId, trackId, actionType, mood, follow relationships) to improve query performance.
+\end{itemize}[web:11]
+
+\subsection{Interface Design}
+
+\subsubsection{API Additions}
+\begin{itemize}
+  \item GET /songs/quick-mix: returns a hybrid playlist combining multiple recommendation strategies.
+  \item Optional endpoints may expose diagnostic data for debugging recommendation issues for internal use only.
+\end{itemize}[web:11]
+
+\subsection{Design Considerations and Future Work}
+
+\subsubsection{Design Decisions}
+\begin{itemize}
+  \item The system uses a hybrid design combining content-based, mood-based, and collaborative filtering to leverage strengths of different recommendation techniques.
+  \item Separation of concerns is maintained through distinct modules for recommendation, mood handling, and social features.
+\end{itemize}[web:11][web:12]
+
+\subsubsection{Future Work Support}
+\begin{itemize}
+  \item The architecture is designed to accommodate more advanced machine learning models and context-aware features without major structural changes.
+  \item Additional services can be added, such as analytics or an explanation service, using the same API-driven modular approach.
+\end{itemize}[web:8][web:11]
+
+%---------------- GLOSSARY ----------------
+\section*{Glossary}
+\addcontentsline{toc}{section}{Glossary}
+\begin{longtable}{p{3cm}p{9cm}}
+\textbf{Acronym} & \textbf{Meaning}\\ \hline
+UI & User Interface\\
+API & Application Programming Interface\\
+DB & Database\\
+SRS & Software Requirements Specification\\
+SDD & Software Design Document\\
+ML & Machine Learning\\
+\end{longtable}
+
+%---------------- REFERENCES ----------------
+\section*{References}
+\addcontentsline{toc}{section}{References}
+\begin{itemize}
+  \item Articles and papers on mood-based and AI-powered music recommendation systems that discuss content filtering, collaborative filtering, and hybrid approaches.[web:8][web:11][web:12]
+  \item General resources on software design documents, test planning, and system architecture used to shape the structure of this SDD.[web:12]
+\end{itemize}
+
+\end{document}

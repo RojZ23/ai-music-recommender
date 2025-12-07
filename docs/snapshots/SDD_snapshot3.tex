@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{hyperref}
+
+\title{Software Design Document (SDD)\\
+AI Music Recommender System\\
+Snapshot 3 - Social and Collaborative Recommendations}
+\author{Project Group 5}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Version Description}
+\begin{longtable}{p{2cm}p{9cm}p{3cm}}
+\textbf{Version} & \textbf{Description} & \textbf{Date}\\ \hline
+3.0 & SDD updated for Snapshot 3. Adds social graph (follow relationships) and collaborative recommendation logic. & \today\\
+\end{longtable}
+
+\section{Introduction}
+\subsection{Purpose}
+This document extends the design to include social and collaborative recommendations, combining user–user relationships with existing content and mood-based approaches.[web:14][web:17]
+
+\subsection{Scope}
+Snapshot 3 adds follow/unfollow operations, friends’ recommendations, and collaborative algorithms while reusing existing modules.
+
+\section{Architecture Changes}
+\subsection{Updated Workflow}
+\begin{enumerate}
+  \item The user follows one or more other users through the client.
+  \item The client sends follow/unfollow requests to the backend social service.
+  \item The social service stores follow relationships in the database.
+  \item When the user opens the “Friends’ Picks” section, the client requests collaborative recommendations.
+  \item The backend retrieves followed users and their liked tracks, optionally incorporating similar-user data, and returns a ranked list.
+\end{enumerate}
+
+\subsection{New/Extended Components}
+\subsubsection{Social Service}
+\begin{itemize}
+  \item Manages follow/unfollow operations.
+  \item Provides APIs to fetch a user’s follow list and followers.
+\end{itemize}
+
+\subsubsection{Collaborative Recommendation Module}
+\begin{itemize}
+  \item Aggregates liked songs from followed users.
+  \item Optionally computes similarity scores between users based on interaction patterns.[web:14][web:19]
+  \item Combines collaborative scores with existing content/mood scores in a hybrid ranking model.
+\end{itemize}
+
+\section{Database Design Updates}
+\subsection{New Tables}
+\begin{itemize}
+  \item Follow(userId, followsUserId, createdAt).
+  \item Optional UserSimilarity(userId, otherUserId, similarityScore) for precomputed similarity.
+\end{itemize}
+
+\subsection{Relationships}
+\begin{itemize}
+  \item A User can follow many other Users via Follow records.
+  \item UserSimilarity allows fast lookup of similar users for collaborative filtering.
+\end{itemize}
+
+\section{Interface Design}
+\subsection{API Changes}
+\begin{itemize}
+  \item POST /social/follow
+  \item POST /social/unfollow
+  \item GET /social/following
+  \item GET /songs/friends-picks
+\end{itemize}
+
+\section{Design Considerations}
+\begin{itemize}
+  \item Social features are designed as a separate module to isolate privacy and policy concerns.
+  \item The hybrid approach allows combining content-based, mood-based, and collaborative scores for better recommendations.[web:14][web:17]
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,62 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{hyperref}
+
+\title{Software Requirements Specification (SRS)\\
+AI Music Recommender System\\
+Snapshot 4 - Final Release and Future Work}
+\author{Project Group 5}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Version Description}
+\begin{longtable}{p{2cm}p{9cm}p{3cm}}
+\textbf{Version} & \textbf{Description} & \textbf{Date}\\ \hline
+4.0 & Final SRS for Snapshot 4. Adds quick-mix feature, refinement requirements, and explicit future work. & \today\\
+\end{longtable}
+
+\section{Introduction}
+\subsection{Purpose}
+This SRS finalizes requirements for Snapshot 4 by adding a quick-mix feature and documenting refinement, quality, and future work for the AI Music Recommender System.[web:13][web:14]
+
+\subsection{Scope}
+Snapshot 4 focuses on polishing existing functionality, adding a lightweight new feature, and clarifying requirements that improve usability and performance.
+
+\section{New Functional Requirements}
+\subsection{Quick Mix Feature}
+\begin{itemize}
+  \item FR-F1: The system shall provide a “Quick Mix” button that generates a mixed playlist using the user’s recent history, current mood (if any), and social signals.
+  \item FR-F2: The system shall start playing the first track of the Quick Mix playlist automatically after it is generated.
+\end{itemize}
+
+\subsection{Refinement and Quality}
+\begin{itemize}
+  \item FR-F3: The system shall allow users to refresh a recommendation section (e.g., mood playlist, friends’ picks) to request a new set of songs.
+  \item FR-F4: The system shall provide basic error messages and feedback when recommendation or network requests fail.
+\end{itemize}
+
+\section{Non-Functional Requirements (Snapshot 4)}
+\subsection{Performance and Reliability}
+\begin{itemize}
+  \item NFR-F1: Generating a Quick Mix playlist shall complete within a few seconds under normal usage.
+  \item NFR-F2: The system shall handle typical concurrent usage scenarios without noticeable degradation, within project constraints.
+\end{itemize}
+
+\subsection{Usability}
+\begin{itemize}
+  \item NFR-F3: Key actions (play, like, skip, mood change, Quick Mix) shall require at most a few taps or clicks from the main screen.
+\end{itemize}
+
+\section{Future Work}
+Potential future improvements include:
+\begin{itemize}
+  \item Integration of more advanced machine learning models for music recommendation and mood detection.[web:13][web:16]
+  \item Support for richer context signals such as time of day, activity, or device location.
+  \item Deeper social features such as collaborative playlist editing and comments.
+  \item Enhanced explainability for recommendations (e.g., showing why a song was recommended).
+\end{itemize}
+
+\end{document}

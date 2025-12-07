@@ -1,0 +1,121 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{hyperref}
+
+\title{Software Requirements Specification (SRS)\\
+AI Music Recommender System\\
+Snapshot 1 - Core System}
+\author{Project Group 5}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Version Description}
+\begin{longtable}{p{2cm}p{9cm}p{3cm}}
+\textbf{Version} & \textbf{Description} & \textbf{Date}\\ \hline
+1.0 & Initial SRS for Snapshot 1 of the AI Music Recommender System. Core functionality: authentication, basic playback, interaction logging, and baseline recommendations. & \today\\
+\end{longtable}
+
+\section{Introduction}
+\subsection{Purpose}
+This SRS defines the functional and non-functional requirements for Snapshot 1 of the AI Music Recommender System, which provides a minimal viable product for personalized music playback using basic user interaction data.
+
+\subsection{Scope}
+Snapshot 1 delivers a web or mobile application where users can register, authenticate, browse a catalog, play songs, provide like or skip feedback, and receive simple personalized recommendations based on their listening history.
+
+\subsection{Intended Audience}
+The intended audience includes the course instructor, teaching assistants, and project team members responsible for analysis, design, implementation, and testing of Snapshot 1.
+
+\subsection{Overview}
+This document describes external interfaces, functional requirements, non-functional requirements, and legal and ethical considerations limited to Snapshot 1 of the system.
+
+\section{Overall Description}
+\subsection{User Needs}
+Users need:
+\begin{itemize}
+  \item A simple way to create an account and sign in securely.
+  \item A music player to browse and play songs from a catalog.
+  \item Personalized recommendations aligned with previous listening behavior.
+  \item A means to express preferences (likes and skips) that influence future recommendations.
+\end{itemize}
+
+\subsection{Product Perspective}
+The system is a standalone application with a client, backend server, and database layer. For Snapshot 1, the catalog is predefined and stored in the project database.
+
+\section{External Interface Requirements}
+\subsection{User Interface}
+Snapshot 1 shall provide:
+\begin{itemize}
+  \item A login and registration screen for user authentication.
+  \item A home screen that displays a list of recommended songs and basic playlists.
+  \item A search screen to search by song title, artist, or genre.
+  \item A now-playing screen with play, pause, next, and previous controls, plus like and skip buttons.
+\end{itemize}
+
+\subsection{Software Interfaces}
+The client communicates with:
+\begin{itemize}
+  \item A backend API for registration, login, recommendation retrieval, catalog browsing, and interaction logging.
+  \item A database storing user accounts, songs, artists, and interaction logs.
+\end{itemize}
+
+\subsection{Hardware Interfaces}
+The system targets standard desktop or mobile devices with network connectivity and does not require special hardware.
+
+\section{Functional Requirements}
+\subsection{Authentication and User Management}
+\begin{itemize}
+  \item FR-1: The system shall allow a new user to create an account using email and password.
+  \item FR-2: The system shall allow an existing user to log in with registered credentials.
+  \item FR-3: The system shall validate credentials and reject invalid login attempts.
+\end{itemize}
+
+\subsection{Music Catalog and Playback}
+\begin{itemize}
+  \item FR-4: The system shall display a list of available songs with title, artist, and basic metadata.
+  \item FR-5: The system shall allow a user to start playback of a selected song.
+  \item FR-6: The system shall provide playback controls for play, pause, next, and previous.
+\end{itemize}
+
+\subsection{Recommendation and Interaction Logging}
+\begin{itemize}
+  \item FR-7: The system shall display a list of recommended songs on the home screen for the logged-in user.
+  \item FR-8: The system shall allow users to like a currently playing song.
+  \item FR-9: The system shall allow users to skip a song and automatically move to the next track.
+  \item FR-10: The system shall log interactions, including plays, likes, and skips, associated with the user.
+  \item FR-11: The system shall use the logged interactions to adjust future recommendations.
+\end{itemize}
+
+\subsection{Search}
+\begin{itemize}
+  \item FR-12: The system shall allow users to search for songs by title, artist, or genre.
+  \item FR-13: The system shall return a list of matching songs that can be played.
+\end{itemize}
+
+\section{Non-Functional Requirements}
+\subsection{Performance}
+\begin{itemize}
+  \item NFR-1: The system should load the home screen and recommended songs within a few seconds under normal network conditions.
+\end{itemize}
+
+\subsection{Usability}
+\begin{itemize}
+  \item NFR-2: Navigation among login, home, search, and now-playing screens shall be intuitive and consistent.
+\end{itemize}
+
+\subsection{Security}
+\begin{itemize}
+  \item NFR-3: Passwords shall be stored using secure hashing rather than plain text.
+  \item NFR-4: Only authenticated users shall access personalized recommendations and interaction history.
+\end{itemize}
+
+\section{Legal and Ethical Considerations}
+\subsection{Data Storage and Privacy}
+The system stores user account information and listening history solely to provide and improve recommendations, limiting access to authorized components in the context of this educational project.
+
+\subsection{User Consent}
+Users are informed that their interaction data (likes, skips, and plays) is collected and used to personalize recommendations and is not shared with third parties.
+
+\end{document}

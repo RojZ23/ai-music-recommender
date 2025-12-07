@@ -1,0 +1,64 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{hyperref}
+
+\title{Software Design Document (SDD)\\
+AI Music Recommender System\\
+Snapshot 4 - Final Release and Future Work}
+\author{Project Group 5}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Version Description}
+\begin{longtable}{p{2cm}p{9cm}p{3cm}}
+\textbf{Version} & \textbf{Description} & \textbf{Date}\\ \hline
+4.0 & Final SDD for Snapshot 4. Adds Quick Mix flow, performance refinements, and design notes for future work. & \today\\
+\end{longtable}
+
+\section{Introduction}
+\subsection{Purpose}
+This document refines the design for Snapshot 4 by adding a Quick Mix feature, performance-related improvements, and architectural notes that support future enhancements.
+
+\subsection{Scope}
+Snapshot 4 does not introduce a major new subsystem but extends existing modules and clarifies design decisions for maintainability and future growth.
+
+\section{Architecture Updates}
+\subsection{Quick Mix Workflow}
+\begin{enumerate}
+  \item The user triggers Quick Mix from the main screen.
+  \item The client calls a Quick Mix endpoint with the user identifier and context (e.g., current mood, recent interactions).
+  \item The backend collects candidate tracks from content-based, mood-based, and collaborative sources.
+  \item The recommendation engine combines these sources into a hybrid ranked playlist.[web:14][web:19]
+  \item The backend returns the playlist, and the client starts playback.
+\end{enumerate}
+
+\subsection{Caching and Optimization (Optional)}
+\begin{itemize}
+  \item Frequently requested recommendation lists (e.g., top mood playlists) may be cached briefly to reduce load.
+  \item Database indexes may be added on key fields (userId, trackId, actionType, mood, follow relationships) to improve query performance.
+\end{itemize}
+
+\section{Interface Design}
+\subsection{API Additions}
+\begin{itemize}
+  \item GET /songs/quick-mix: returns a hybrid playlist combining multiple recommendation strategies.
+  \item Optional: endpoints to expose diagnostic data for debugging recommendation issues (for internal use only).
+\end{itemize}
+
+\section{Design Considerations and Future Work}
+\subsection{Design Decisions}
+\begin{itemize}
+  \item The system uses a hybrid design combining content-based, mood-based, and collaborative filtering to leverage strengths of different recommendation techniques.[web:14][web:17]
+  \item Separation of concerns is maintained through distinct modules for recommendation, mood handling, and social features.
+\end{itemize}
+
+\subsection{Future Work Support}
+\begin{itemize}
+  \item The architecture is designed to accommodate more advanced ML models and context-aware features without major structural changes.[web:13][web:16]
+  \item Additional services can be added (e.g., analytics, explanation service) using the same API-driven modular approach.
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,63 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{hyperref}
+
+\title{Software Requirements Specification (SRS)\\
+AI Music Recommender System\\
+Snapshot 3 - Social and Collaborative Recommendations}
+\author{Project Group 5}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Version Description}
+\begin{longtable}{p{2cm}p{9cm}p{3cm}}
+\textbf{Version} & \textbf{Description} & \textbf{Date}\\ \hline
+3.0 & SRS updated for Snapshot 3. Adds social and collaborative recommendation features (follow users, friends’ picks). & \today\\
+\end{longtable}
+
+\section{Introduction}
+\subsection{Purpose}
+This SRS extends Snapshots 1 and 2 by specifying social and collaborative recommendation features, allowing users to follow other users and receive recommendations influenced by community listening patterns.[web:14][web:17]
+
+\subsection{Scope}
+Snapshot 3 adds follow relationships, friends’ playlists, and collaborative recommendation logic while maintaining all previously implemented features.
+
+\section{New Functional Requirements}
+\subsection{Follow System}
+\begin{itemize}
+  \item FR-S1: The system shall allow a logged-in user to follow another user.
+  \item FR-S2: The system shall allow a user to unfollow a previously followed user.
+  \item FR-S3: The system shall display a list of users that the current user follows.
+\end{itemize}
+
+\subsection{Friends’ Picks / Collaborative Recommendations}
+\begin{itemize}
+  \item FR-S4: The system shall display a “Friends’ Picks” or similar section with songs liked by followed users.
+  \item FR-S5: The system shall update the “Friends’ Picks” section when followed users like new songs.
+  \item FR-S6: The system shall use collaborative information (e.g., similar users’ likes) to supplement content-based and mood-based recommendations.[web:14][web:19]
+\end{itemize}
+
+\subsection{Privacy and Control}
+\begin{itemize}
+  \item FR-S7: The system shall only share non-sensitive activity (e.g., liked songs) as part of social features.
+  \item FR-S8: The system shall allow users to view which parts of their activity are visible to followers.
+\end{itemize}
+
+\section{Non-Functional Requirements (Snapshot 3)}
+\subsection{Performance}
+\begin{itemize}
+  \item NFR-S1: Generating the “Friends’ Picks” list should complete within a few seconds for a typical number of followed users.
+\end{itemize}
+
+\subsection{Usability}
+\begin{itemize}
+  \item NFR-S2: Follow/unfollow controls shall be clearly labeled and accessible from user profile or recommendation screens.
+\end{itemize}
+
+\section{Legal and Ethical Considerations}
+Social features introduce additional privacy considerations, and the system shall inform users that their liked tracks may be visible to followers while avoiding exposure of personal identifiers beyond the project requirements.[web:14]
+
+\end{document}

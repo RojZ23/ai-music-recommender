@@ -1,0 +1,85 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable}
+\usepackage{hyperref}
+
+\title{Software Design Document (SDD)\\
+AI Music Recommender System\\
+Snapshot 2 - Mood-Based Recommendations}
+\author{Project Group 5}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Version Description}
+\begin{longtable}{p{2cm}p{9cm}p{3cm}}
+\textbf{Version} & \textbf{Description} & \textbf{Date}\\ \hline
+2.0 & SDD updated for Snapshot 2. Extends architecture and database design for mood-based recommendations. & \today\\
+\end{longtable}
+
+\section{Introduction}
+\subsection{Purpose}
+This document updates the Snapshot 1 design to incorporate mood-based recommendations, including new UI elements, backend logic, and database structures.[web:16][web:18]
+
+\subsection{Scope}
+Snapshot 2 modifies the recommendation workflow to accept a mood parameter, adds storage for mood preferences, and updates the client to support mood selection.
+
+\section{Architecture Changes}
+\subsection{Updated Workflow}
+\begin{enumerate}
+  \item The user logs in and views the home screen.
+  \item The user selects a mood (e.g., Happy, Chill, Focus).
+  \item The client calls the recommendation API with the user identifier and selected mood.
+  \item The backend queries song features or tags associated with that mood and the user’s interaction history.
+  \item The recommendation engine ranks candidate songs using a mood-aware scoring function and returns a playlist.
+  \item The user plays songs and provides like/skip feedback, which is stored with the active mood label.
+\end{enumerate}
+
+\subsection{New/Extended Components}
+\subsubsection{Client Application}
+\begin{itemize}
+  \item Adds a mood selector UI element on the home screen.
+  \item Displays a “Mood Playlist” section populated by mood-aware recommendations.
+\end{itemize}
+
+\subsubsection{Backend Services}
+\begin{itemize}
+  \item Extends the recommendation API to accept an optional mood parameter.
+  \item Adds a mood preference handler that records the user’s selected mood.
+\end{itemize}
+
+\subsubsection{Recommendation Engine}
+\begin{itemize}
+  \item Incorporates mood metadata (e.g., mood labels, energy, valence) into the ranking algorithm.[web:13][web:18]
+  \item Applies filters and boosts for songs whose mood attributes align with the selected mood.
+\end{itemize}
+
+\section{Database Design Updates}
+\subsection{New/Modified Tables}
+\begin{itemize}
+  \item MoodPreference(userId, mood, selectedAt).
+  \item Optional mood-related attributes added to Track, such as moodLabel or energy/valence fields.
+  \item Interaction table extended with an optional mood column to record the active mood at the time of interaction.
+\end{itemize}
+
+\subsection{Example Relationships}
+\begin{itemize}
+  \item One User to many MoodPreference records.
+  \item One Track may be associated with one or more mood labels via attributes or auxiliary tables.
+\end{itemize}
+
+\section{Interface Design}
+\subsection{API Changes}
+\begin{itemize}
+  \item GET /songs/recommended?mood=\{mood\}: returns a mood-aware recommendation list.
+  \item POST /moods/select: stores the user’s selected mood for the current session.
+\end{itemize}
+
+\section{Design Considerations}
+\begin{itemize}
+  \item Mood-based logic is designed to be modular, allowing additional moods or a more advanced mood detection model in future snapshots.[web:16]
+  \item Default behavior falls back to Snapshot 1 recommendations when no mood is selected.
+\end{itemize}
+
+\end{document}
