@@ -1,7 +1,7 @@
 # AI Music Recommender System
 
 ## Jira Project Link
-- Jira board: https://your-org.atlassian.net/jira/software/c/projects/AI-MUSIC/boards/1
+- Jira board: https://castellon3742-1765304946055.atlassian.net/jira/software/projects/SCRUM/boards/1/backlog
 
 ## Formal Objective
 The objective of this project is to design and implement an AI-powered music recommender system that provides personalized playlists based on listening history, mood, and social signals.
