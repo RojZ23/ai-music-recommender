@@ -1,0 +1,4 @@
+"ID","Title","Assigned To","Case ID","Comment","Defects","Elapsed","Estimate","Forecast","In Progress","Plan","Plan ID","Priority","References","Run","Run Configuration","Run ID","Section","Section Depth","Section Description","Status","Tested By","Tested On","Type","Version"
+"T119","SNAPSHOT-4-TEST-1","","C44","","","","","","","","","Medium","","Snapshot 4 testing","","R15","Test Cases","0","","Passed","David Nazaryan","12/9/2025 6:31 AM","Other",""
+"T120","SNAPSHOT-4-TEST-2","","C45","","","","","","","","","Medium","","Snapshot 4 testing","","R15","Test Cases","0","","Passed","David Nazaryan","12/9/2025 6:31 AM","Other",""
+"T121","SNAPSHOT-4-TEST-3","","C46","","","","","","","","","Medium","","Snapshot 4 testing","","R15","Test Cases","0","","Passed","David Nazaryan","12/9/2025 6:31 AM","Other",""
