@@ -6,7 +6,6 @@ This file belongs in:
 
 - `docs/testrail/`
 
-Within that folder you will place the exports or screenshots related to your TestRail test management for each snapshot.
 
 Example structure:
 
